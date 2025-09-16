@@ -27,7 +27,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/<your-username>/<your-repo>.git
+git clone https://github.com/cuicuicuia/threeConnon.git
 cd <your-repo>
 
 # 安装依赖

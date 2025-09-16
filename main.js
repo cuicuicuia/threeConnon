@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
-
+import BallControls from "./controls.js"; // 引入控制器
 // === Three.js ===
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
@@ -53,6 +53,8 @@ const ballBody = new CANNON.Body({
   position: new CANNON.Vec3(0, 10, 0),
 });
 world.addBody(ballBody);
+// === 控制器 ===
+const controls = new BallControls(ballBody, 50); // 第二个参数是施加的力大小
 
 const ballMesh = new THREE.Mesh(
   new THREE.SphereGeometry(radius, 32, 32),
@@ -74,6 +76,9 @@ function animate() {
   ballMesh.position.copy(ballBody.position);
   ballMesh.quaternion.copy(ballBody.quaternion);
 
+  // 相机跟随球体 - 保持相对位置
+
+  controls.update();
   renderer.render(scene, camera);
 }
 
