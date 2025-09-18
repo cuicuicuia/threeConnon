@@ -48,7 +48,7 @@ const world = new CANNON.World({
 });
 
 // === 地板 ===
-const groundShape = new CANNON.Box(new CANNON.Vec3(25, 0.5, 25));
+const groundShape = new CANNON.Box(new CANNON.Vec3(250, 0.5, 250));
 const groundBody = new CANNON.Body({
   mass: 0,
   shape: groundShape,
@@ -58,7 +58,7 @@ world.addBody(groundBody);
 
 // THREE 地板（半透明线框）
 const groundMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(50, 50),
+  new THREE.PlaneGeometry(250, 250),
   new THREE.MeshStandardMaterial({
     color: 0x888888,
     transparent: true,
@@ -69,7 +69,7 @@ const groundMesh = new THREE.Mesh(
 groundMesh.rotation.x = -Math.PI / 2;
 
 // 线框
-const gridHelper = new THREE.GridHelper(50, 50, 0xffffff, 0xffffff);
+const gridHelper = new THREE.GridHelper(250, 40, 0xffffff, 0xffffff);
 gridHelper.material.opacity = 0.2;
 gridHelper.material.transparent = true;
 
@@ -83,14 +83,16 @@ const ballBody = new CANNON.Body({
   shape: new CANNON.Sphere(radius),
   position: new CANNON.Vec3(0, 10, 0),
   linearDamping: 0.5,
-  angularDamping: 0.4,
+  angularDamping: 0.93,
 });
 world.addBody(ballBody);
-
 // 球体 Mesh
 const ballMesh = new THREE.Mesh(
   new THREE.SphereGeometry(radius, 32, 32),
-  new THREE.MeshStandardMaterial({ color: 0xff4444 })
+  new THREE.MeshStandardMaterial({
+    map: new THREE.TextureLoader().load("./earth.jpg"),
+    aoMap: new THREE.TextureLoader().load("./earth.jpg"),
+  })
 );
 ballMesh.castShadow = true;
 scene.add(ballMesh);
